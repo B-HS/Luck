@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "bun run build:css && bun run --hot server.ts",
     "build:css": "bunx @tailwindcss/cli -i ./ui/globals.css -o ./public/globals.css --minify",
-    "build": "bun run build:css",
+    "build": "bun run build:css && bun build api/index.ts --outfile api/index.js --target node --format esm --packages external && rm api/index.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
