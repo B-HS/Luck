@@ -8,10 +8,10 @@ import { NotFoundPage } from '../ui/not-found-page'
 import { getCacheHeader } from '../lib/cache-header'
 
 const buildSeo = (result: LottoResult, episode: number, baseUrl: string) => {
-    const nums = `${result.num1} ${result.num2} ${result.num3} ${result.num4} ${result.num5} ${result.num6} + ${result.bonusNum}`
+    const nums = `${result.num1}, ${result.num2}, ${result.num3}, ${result.num4}, ${result.num5}, ${result.num6} + ${result.bonusNum}`
     return {
         title: `제 ${episode}회 추첨결과 - 로또 6/45`,
-        description: `제 ${episode}회 로또 6/45 당첨번호: ${nums}`,
+        description: nums,
         ogImage: `${baseUrl}/og/${episode}`,
         canonical: `${baseUrl}/episode/${episode}`,
     }

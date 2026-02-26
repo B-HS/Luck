@@ -62,7 +62,7 @@ describe('Pages Router SEO', () => {
         const pages = createPagesRouter(deps)
         const res = await pages.request('/')
         const html = await res.text()
-        expect(html).toContain('3 10 15 22 33 44 + 7')
+        expect(html).toContain('3, 10, 15, 22, 33, 44 + 7')
     })
 
     test('/ 경로에서 og:image 메타태그 포함', async () => {
@@ -107,7 +107,7 @@ describe('Pages Router SEO', () => {
         const html = await res.text()
         expect(html).toContain('제 1200회 추첨결과 - 로또 6/45')
         expect(html).toContain('/og/1200')
-        expect(html).toContain('3 10 15 22 33 44 + 7')
+        expect(html).toContain('3, 10, 15, 22, 33, 44 + 7')
     })
 
     test('결과 없을 때 fallback 처리', async () => {

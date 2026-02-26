@@ -14,8 +14,8 @@ describe('Layout SEO', () => {
     })
 
     test('description 메타태그 렌더링', () => {
-        const html = renderToString(<Layout description='제 1210회 로또 6/45 당첨번호: 1 7 9 17 27 38 + 31'>content</Layout>)
-        expect(html).toContain('name="description" content="제 1210회 로또 6/45 당첨번호: 1 7 9 17 27 38 + 31"')
+        const html = renderToString(<Layout description='1, 7, 9, 17, 27, 38 + 31'>content</Layout>)
+        expect(html).toContain('name="description" content="1, 7, 9, 17, 27, 38 + 31"')
     })
 
     test('description 없으면 메타태그 미렌더링', () => {
@@ -29,8 +29,8 @@ describe('Layout SEO', () => {
     })
 
     test('og:description 렌더링', () => {
-        const html = renderToString(<Layout description='당첨번호: 1 2 3'>content</Layout>)
-        expect(html).toContain('property="og:description" content="당첨번호: 1 2 3"')
+        const html = renderToString(<Layout description='1, 2, 3'>content</Layout>)
+        expect(html).toContain('property="og:description" content="1, 2, 3"')
     })
 
     test('og:image 렌더링', () => {
