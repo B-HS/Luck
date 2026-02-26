@@ -2,9 +2,15 @@ import { eq } from "drizzle-orm";
 import { lottoResults } from "../db/schema";
 import type { DrizzleDb } from "../db/index";
 
-type NewLottoResult = typeof lottoResults.$inferInsert;
+export type LottoResultRow = typeof lottoResults.$inferSelect;
+export type NewLottoResult = typeof lottoResults.$inferInsert;
 
-export const createLottoResultRepository = (db: DrizzleDb) => ({
+export type LottoResultRepository = {
+  findByEpisode: (episodeId: number) => PromiseLike<LottoResultRow | undefined>;
+  insert: (data: NewLottoResult) => PromiseLike<unknown>;
+};
+
+export const createLottoResultRepository = (db: DrizzleDb): LottoResultRepository => ({
   findByEpisode: (episodeId: number) =>
     db.query.lottoResults.findFirst({
       where: eq(lottoResults.episodeId, episodeId),
@@ -13,7 +19,3 @@ export const createLottoResultRepository = (db: DrizzleDb) => ({
   insert: (data: NewLottoResult) =>
     db.insert(lottoResults).values(data).onConflictDoNothing(),
 });
-
-export type LottoResultRepository = ReturnType<
-  typeof createLottoResultRepository
->;

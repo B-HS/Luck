@@ -46,8 +46,8 @@ describe("LottoService", () => {
       insert: mock(() => Promise.resolve()),
     };
     const mockEpisodeRepo = {
-      findById: mock(() => Promise.resolve(null)),
-      findLatest: mock(() => Promise.resolve(null)),
+      findById: mock(() => Promise.resolve(undefined)),
+      findLatest: mock(() => Promise.resolve(undefined)),
       findAll: mock(() => Promise.resolve([])),
       insert: mock(() => Promise.resolve()),
       markDrawn: mock(() => Promise.resolve()),
@@ -115,8 +115,8 @@ describe("LottoService", () => {
       insert: mock(() => Promise.resolve()),
     };
     const mockEpisodeRepo = {
-      findById: mock(() => Promise.resolve(null)),
-      findLatest: mock(() => Promise.resolve(null)),
+      findById: mock(() => Promise.resolve(undefined)),
+      findLatest: mock(() => Promise.resolve(undefined)),
       findAll: mock(() => Promise.resolve([])),
       insert: mock(() => Promise.resolve()),
       markDrawn: mock(() => Promise.resolve()),

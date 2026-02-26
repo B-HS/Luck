@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { secureHeaders } from "hono/secure-headers";
 import { createDb } from "./db/index";
 import { createEpisodeRepository } from "./repository/episode-repository";
 import { createLottoResultRepository } from "./repository/lotto-result-repository";
@@ -8,6 +9,7 @@ import { createLottoService } from "./services/lotto-service";
 import { createApiRouter } from "./router/api";
 import { createPagesRouter } from "./router/pages";
 import { createLruCache } from "./lib/lru-cache";
+import type { LottoResult } from "./services/lotto-service";
 
 const db = createDb({
   url: process.env.TURSO_DATABASE_URL!,
@@ -19,7 +21,7 @@ const lottoResultRepo = createLottoResultRepository(db);
 const dhlotteryClient = createDhlotteryClient(fetch);
 
 const episodeService = createEpisodeService({ episodeRepo });
-const lruCache = createLruCache(30);
+const lruCache = createLruCache<LottoResult>(30);
 const lottoService = createLottoService({
   lottoResultRepo,
   episodeRepo,
@@ -28,6 +30,8 @@ const lottoService = createLottoService({
 });
 
 export const app = new Hono();
+
+app.use("*", secureHeaders());
 
 app.route("/api", createApiRouter({ lottoService, episodeService }));
 app.route("/", createPagesRouter({ lottoService, episodeService }));

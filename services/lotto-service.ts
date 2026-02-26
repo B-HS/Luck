@@ -3,11 +3,13 @@ import type { EpisodeRepository } from "../repository/episode-repository";
 import type { DhlotteryClient } from "./dhlottery-client";
 import type { createLruCache } from "../lib/lru-cache";
 
-type LottoResult = NonNullable<
+export type LottoResult = NonNullable<
   Awaited<ReturnType<LottoResultRepository["findByEpisode"]>>
 >;
 
 const LRU_MAX_SIZE = 30;
+
+const MAX_EPISODE = 9999;
 
 export const createLottoService = (deps: {
   lottoResultRepo: LottoResultRepository;
@@ -16,6 +18,9 @@ export const createLottoService = (deps: {
   lruCache: ReturnType<typeof createLruCache<LottoResult>>;
 }) => ({
   getResult: async (episode: number) => {
+    if (!Number.isInteger(episode) || episode < 1 || episode > MAX_EPISODE) {
+      return null;
+    }
     const memCached = deps.lruCache.get(String(episode));
     if (memCached) {
       console.log(`[메모리 캐시] ${episode}회 결과 조회`);

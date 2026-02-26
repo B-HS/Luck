@@ -53,7 +53,7 @@ export const createPagesRouter = (deps: {
 
   pages.get("/episode/:id", async (c) => {
     const id = Number(c.req.param("id"));
-    if (isNaN(id) || id < 1) {
+    if (!Number.isInteger(id) || id < 1 || id > 9999) {
       return c.redirect("/");
     }
 
