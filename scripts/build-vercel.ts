@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync, cpSync, copyFileSync, readdirSync } from "fs";
+import { mkdirSync, writeFileSync, copyFileSync, readdirSync } from "fs";
 
 const FUNC_DIR = ".vercel/output/functions/api/index.func";
 
@@ -15,8 +15,6 @@ const result = Bun.spawnSync([
   "node",
   "--format",
   "esm",
-  "--external",
-  "@libsql/client",
 ]);
 
 if (result.exitCode !== 0) {
@@ -25,13 +23,6 @@ if (result.exitCode !== 0) {
 }
 
 console.log(result.stdout.toString());
-
-const externalPackages = ["@libsql/client", "@libsql/core", "libsql"];
-for (const pkg of externalPackages) {
-  const src = `node_modules/${pkg}`;
-  const dest = `${FUNC_DIR}/node_modules/${pkg}`;
-  cpSync(src, dest, { recursive: true, errorOnExist: false });
-}
 
 writeFileSync(
   `${FUNC_DIR}/.vc-config.json`,
