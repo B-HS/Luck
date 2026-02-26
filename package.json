@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "bun run build:css && bun run --hot server.ts",
     "build:css": "bunx @tailwindcss/cli -i ./ui/globals.css -o ./public/globals.css --minify",
-    "build": "bun run build:css && mkdir -p api && NODE_ENV=production bun build entry/vercel.ts --outfile api/index.js --target node --format esm --packages external",
+    "build": "bun run build:css && bun run build:vercel",
+    "build:vercel": "bun scripts/build-vercel.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
