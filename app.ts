@@ -1,4 +1,5 @@
 import { Hono } from 'hono'
+import { cors } from 'hono/cors'
 import { secureHeaders } from 'hono/secure-headers'
 import { createDb } from './db/index'
 import { createEpisodeRepository } from './repository/episode-repository'
@@ -32,7 +33,22 @@ const lottoService = createLottoService({
 
 export const app = new Hono()
 
-app.use('*', secureHeaders())
+app.use('*', cors({
+    origin: process.env.ALLOWED_ORIGIN ?? 'https://luck.gumyo.net',
+    allowMethods: ['GET'],
+}))
+app.use('*', secureHeaders({
+    contentSecurityPolicy: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", 'data:'],
+        connectSrc: ["'self'"],
+        fontSrc: ["'self'"],
+        objectSrc: ["'none'"],
+        frameAncestors: ["'none'"],
+    },
+}))
 app.use('*', createRateLimiter(60 * 1000, 60))
 
 app.route('/api', createApiRouter({ lottoService, episodeService }))
@@ -41,6 +57,7 @@ app.route('/', createPagesRouter({ lottoService, episodeService }))
 app.notFound((c) => c.json({ error: 'Not Found' }, 404))
 
 app.onError((err, c) => {
-    console.error('[서버 에러]', err.message)
+    const safeMessage = String(err.message).slice(0, 200).replace(/[\r\n]/g, ' ')
+    console.error('[서버 에러]', safeMessage)
     return c.json({ error: '서버 오류가 발생했습니다' }, 500)
 })

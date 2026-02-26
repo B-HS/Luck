@@ -19,11 +19,10 @@ export const createPagesRouter = (deps: { lottoService: LottoService; episodeSer
         const latestEpisode = deps.episodeService.getLatestEpisodeNumber()
         const result = await deps.lottoService.getResult(latestEpisode)
 
-        c.header('Cache-Control', 'public, max-age=0, s-maxage=300, stale-while-revalidate=60')
-
         if (!result) {
             const prevResult = await deps.lottoService.getResult(latestEpisode - 1)
             if (prevResult) {
+                c.header('Cache-Control', 'public, max-age=0, s-maxage=300, stale-while-revalidate=60')
                 const html = renderHtml(
                     <Layout title={`제 ${latestEpisode - 1}회 추첨결과 - 로또 6/45`}>
                         <ResultPage result={prevResult} latestEpisode={latestEpisode} />
@@ -32,6 +31,7 @@ export const createPagesRouter = (deps: { lottoService: LottoService; episodeSer
                 return c.html(html)
             }
 
+            c.header('Cache-Control', 'no-cache')
             const html = renderHtml(
                 <Layout>
                     <NotFoundPage episode={latestEpisode} />
@@ -40,6 +40,7 @@ export const createPagesRouter = (deps: { lottoService: LottoService; episodeSer
             return c.html(html)
         }
 
+        c.header('Cache-Control', 'public, max-age=0, s-maxage=300, stale-while-revalidate=60')
         const html = renderHtml(
             <Layout title={`제 ${latestEpisode}회 추첨결과 - 로또 6/45`}>
                 <ResultPage result={result} latestEpisode={latestEpisode} />

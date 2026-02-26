@@ -5,6 +5,7 @@ import { getCacheHeader } from '../lib/cache-header'
 
 const MAX_EPISODE = 9999
 const MAX_LIMIT = 100
+const MAX_OFFSET = 10_000
 
 export const createApiRouter = (deps: { lottoService: LottoService; episodeService: EpisodeService }) => {
     const api = new Hono()
@@ -30,7 +31,7 @@ export const createApiRouter = (deps: { lottoService: LottoService; episodeServi
         const rawLimit = Number(c.req.query('limit') || '20')
         const rawOffset = Number(c.req.query('offset') || '0')
         const limit = Number.isFinite(rawLimit) ? Math.min(Math.max(rawLimit, 1), MAX_LIMIT) : 20
-        const offset = Number.isFinite(rawOffset) ? Math.max(rawOffset, 0) : 0
+        const offset = Number.isFinite(rawOffset) ? Math.min(Math.max(rawOffset, 0), MAX_OFFSET) : 0
         const episodes = await deps.episodeService.getEpisodes(limit, offset)
         c.header('Cache-Control', 'public, max-age=0, s-maxage=300, stale-while-revalidate=60')
         return c.json(episodes)

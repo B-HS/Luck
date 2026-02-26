@@ -52,7 +52,7 @@ export const createDhlotteryClient = (fetchFn: FetchFn) => ({
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
-                'User-Agent': 'Mozilla/5.0',
+                'User-Agent': 'lotto-checker/1.0',
             },
             signal: AbortSignal.timeout(10_000),
         })
@@ -61,13 +61,31 @@ export const createDhlotteryClient = (fetchFn: FetchFn) => ({
             throw new Error('동행복권 API 요청 실패')
         }
 
-        const json = (await res.json()) as DhlotteryResponse
-        const list = json.data?.list
-        if (!list || list.length === 0) {
+        const MAX_RESPONSE_SIZE = 1024 * 512
+        const text = await res.text()
+        if (text.length > MAX_RESPONSE_SIZE) {
+            throw new Error('동행복권 API 응답이 너무 큽니다')
+        }
+
+        const json = JSON.parse(text)
+        const list = json?.data?.list
+        if (!Array.isArray(list) || list.length === 0) {
             return null
         }
 
-        const item = list.find((i) => i.ltEpsd === episode) ?? list[0]!
+        const item = list.find((i: DhlotteryItem) => i.ltEpsd === episode) ?? list[0]!
+
+        const isValidLottoNum = (n: unknown): n is number =>
+            typeof n === 'number' && Number.isInteger(n) && n >= 1 && n <= 45
+
+        const nums = [item.tm1WnNo, item.tm2WnNo, item.tm3WnNo, item.tm4WnNo, item.tm5WnNo, item.tm6WnNo, item.bnsWnNo]
+        if (!nums.every(isValidLottoNum)) {
+            throw new Error('동행복권 API 응답 데이터가 유효하지 않습니다')
+        }
+
+        if (typeof item.ltEpsd !== 'number' || typeof item.ltRflYmd !== 'string') {
+            throw new Error('동행복권 API 응답 데이터가 유효하지 않습니다')
+        }
 
         return {
             episodeId: item.ltEpsd,
