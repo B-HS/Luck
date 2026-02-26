@@ -5,8 +5,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/ui/components/table.tsx";
-import { formatMoney, formatCount } from "@/lib/format.ts";
+} from "../ui/components/table.tsx";
+import { formatMoney, formatCount } from "../lib/format.ts";
 
 interface PrizeRow {
   rank: number;

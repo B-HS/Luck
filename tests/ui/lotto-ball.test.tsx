@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { render, screen } from "@testing-library/react";
-import { LottoBall } from "@/ui/lotto-ball.tsx";
+import { LottoBall } from "../../ui/lotto-ball.tsx";
 
 describe("LottoBall", () => {
   test("번호를 렌더링", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { getBallColor } from "@/lib/ball-color.ts";
+import { getBallColor } from "../../lib/ball-color.ts";
 
 describe("getBallColor", () => {
   test("1~10 → 노란색", () => {

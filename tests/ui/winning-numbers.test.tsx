@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { render, screen } from "@testing-library/react";
-import { WinningNumbers } from "@/ui/winning-numbers.tsx";
+import { WinningNumbers } from "../../ui/winning-numbers.tsx";
 
 describe("WinningNumbers", () => {
   test("6개 번호 + 보너스 번호를 렌더링", () => {

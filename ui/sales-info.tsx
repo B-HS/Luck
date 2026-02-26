@@ -1,4 +1,4 @@
-import { formatMoney } from "@/lib/format.ts";
+import { formatMoney } from "../lib/format.ts";
 
 export const SalesInfo = ({
   totalSales,

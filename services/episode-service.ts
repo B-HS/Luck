@@ -1,4 +1,4 @@
-import type { EpisodeRepository } from "@/repository/episode-repository.ts";
+import type { EpisodeRepository } from "../repository/episode-repository.ts";
 
 const FIRST_DRAW_DATE = new Date("2002-12-07T00:00:00+09:00");
 const MS_PER_WEEK = 7 * 24 * 60 * 60 * 1000;

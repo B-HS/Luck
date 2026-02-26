@@ -1,5 +1,5 @@
-import type { LottoResultRepository } from "@/repository/lotto-result-repository.ts";
-import type { EpisodeRepository } from "@/repository/episode-repository.ts";
+import type { LottoResultRepository } from "../repository/lotto-result-repository.ts";
+import type { EpisodeRepository } from "../repository/episode-repository.ts";
 import type { DhlotteryClient } from "./dhlottery-client.ts";
 
 export const createLottoService = (deps: {

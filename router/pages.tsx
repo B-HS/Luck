@@ -1,10 +1,10 @@
 import { Hono } from "hono";
 import { renderToString } from "react-dom/server";
-import type { LottoService } from "@/services/lotto-service.ts";
-import type { EpisodeService } from "@/services/episode-service.ts";
-import { Layout } from "@/ui/layout.tsx";
-import { ResultPage } from "@/ui/result-page.tsx";
-import { NotFoundPage } from "@/ui/not-found-page.tsx";
+import type { LottoService } from "../services/lotto-service.ts";
+import type { EpisodeService } from "../services/episode-service.ts";
+import { Layout } from "../ui/layout.tsx";
+import { ResultPage } from "../ui/result-page.tsx";
+import { NotFoundPage } from "../ui/not-found-page.tsx";
 
 export const createPagesRouter = (deps: {
   lottoService: LottoService;
