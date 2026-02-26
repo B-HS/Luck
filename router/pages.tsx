@@ -5,6 +5,7 @@ import type { EpisodeService } from "../services/episode-service";
 import { Layout } from "../ui/layout";
 import { ResultPage } from "../ui/result-page";
 import { NotFoundPage } from "../ui/not-found-page";
+import { getCacheHeader } from "../lib/cache-header";
 
 export const createPagesRouter = (deps: {
   lottoService: LottoService;
@@ -20,6 +21,8 @@ export const createPagesRouter = (deps: {
   pages.get("/", async (c) => {
     const latestEpisode = deps.episodeService.getLatestEpisodeNumber();
     const result = await deps.lottoService.getResult(latestEpisode);
+
+    c.header("Cache-Control", "public, max-age=0, s-maxage=300, stale-while-revalidate=60");
 
     if (!result) {
       const prevResult = await deps.lottoService.getResult(latestEpisode - 1);
@@ -58,6 +61,7 @@ export const createPagesRouter = (deps: {
     const result = await deps.lottoService.getResult(id);
 
     if (!result) {
+      c.header("Cache-Control", "no-cache");
       const html = renderHtml(
         <Layout title={`제 ${id}회 - 로또 6/45`}>
           <NotFoundPage episode={id} />
@@ -65,6 +69,8 @@ export const createPagesRouter = (deps: {
       );
       return c.html(html, 404);
     }
+
+    c.header("Cache-Control", getCacheHeader(id, latestEpisode));
 
     const html = renderHtml(
       <Layout title={`제 ${id}회 추첨결과 - 로또 6/45`}>

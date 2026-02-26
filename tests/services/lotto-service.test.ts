@@ -1,5 +1,6 @@
 import { describe, expect, test, mock } from "bun:test";
 import { createLottoService } from "../../services/lotto-service";
+import { createLruCache } from "../../lib/lru-cache";
 
 const makeMockResult = (episodeId: number) => ({
   id: 1,
@@ -60,6 +61,7 @@ describe("LottoService", () => {
       lottoResultRepo: mockRepo,
       episodeRepo: mockEpisodeRepo,
       dhlotteryClient: mockClient,
+      lruCache: createLruCache(30),
     });
 
     const result = await service.getResult(1210);
@@ -128,6 +130,7 @@ describe("LottoService", () => {
       lottoResultRepo: mockRepo,
       episodeRepo: mockEpisodeRepo,
       dhlotteryClient: mockClient,
+      lruCache: createLruCache(30),
     });
 
     const result = await service.getResult(1209);

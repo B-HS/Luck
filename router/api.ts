@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import type { LottoService } from "../services/lotto-service";
 import type { EpisodeService } from "../services/episode-service";
+import { getCacheHeader } from "../lib/cache-header";
 
 export const createApiRouter = (deps: {
   lottoService: LottoService;
@@ -19,6 +20,9 @@ export const createApiRouter = (deps: {
       return c.json({ error: "결과를 찾을 수 없습니다" }, 404);
     }
 
+    const latestEpisode = deps.episodeService.getLatestEpisodeNumber();
+    c.header("Cache-Control", getCacheHeader(episode, latestEpisode));
+
     return c.json(result);
   });
 
@@ -26,6 +30,7 @@ export const createApiRouter = (deps: {
     const limit = Number(c.req.query("limit") || "20");
     const offset = Number(c.req.query("offset") || "0");
     const episodes = await deps.episodeService.getEpisodes(limit, offset);
+    c.header("Cache-Control", "public, max-age=0, s-maxage=300, stale-while-revalidate=60");
     return c.json(episodes);
   });
 

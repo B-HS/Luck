@@ -7,6 +7,7 @@ import { createEpisodeService } from "./services/episode-service";
 import { createLottoService } from "./services/lotto-service";
 import { createApiRouter } from "./router/api";
 import { createPagesRouter } from "./router/pages";
+import { createLruCache } from "./lib/lru-cache";
 
 const db = createDb({
   url: process.env.TURSO_DATABASE_URL!,
@@ -18,10 +19,12 @@ const lottoResultRepo = createLottoResultRepository(db);
 const dhlotteryClient = createDhlotteryClient(fetch);
 
 const episodeService = createEpisodeService({ episodeRepo });
+const lruCache = createLruCache(30);
 const lottoService = createLottoService({
   lottoResultRepo,
   episodeRepo,
   dhlotteryClient,
+  lruCache,
 });
 
 export const app = new Hono();
