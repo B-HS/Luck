@@ -1,4 +1,4 @@
-import { mkdirSync, writeFileSync, copyFileSync, readdirSync } from 'fs'
+import { mkdirSync, writeFileSync, copyFileSync, readdirSync, existsSync } from 'fs'
 
 const FUNC_DIR = '.vercel/output/functions/api/index.func'
 
@@ -13,6 +13,21 @@ if (result.exitCode !== 0) {
 }
 
 console.log(result.stdout.toString())
+
+const wasmSrc = 'node_modules/@resvg/resvg-wasm/index_bg.wasm'
+const wasmDestDir = `${FUNC_DIR}/node_modules/@resvg/resvg-wasm`
+mkdirSync(wasmDestDir, { recursive: true })
+copyFileSync(wasmSrc, `${wasmDestDir}/index_bg.wasm`)
+
+const fontDir = 'node_modules/@fontsource/noto-sans-kr/files'
+const fontDestDir = `${FUNC_DIR}/node_modules/@fontsource/noto-sans-kr/files`
+mkdirSync(fontDestDir, { recursive: true })
+if (existsSync(fontDir)) {
+    const fontFiles = readdirSync(fontDir).filter((f) => f.includes('korean-700'))
+    for (const file of fontFiles) {
+        copyFileSync(`${fontDir}/${file}`, `${fontDestDir}/${file}`)
+    }
+}
 
 writeFileSync(
     `${FUNC_DIR}/.vc-config.json`,

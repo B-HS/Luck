@@ -9,6 +9,7 @@ import { createEpisodeService } from './services/episode-service'
 import { createLottoService } from './services/lotto-service'
 import { createApiRouter } from './router/api'
 import { createPagesRouter } from './router/pages'
+import { createOgRouter } from './router/og'
 import { createLruCache } from './lib/lru-cache'
 import { createRateLimiter } from './lib/rate-limiter'
 import type { LottoResult } from './services/lotto-service'
@@ -42,7 +43,7 @@ app.use('*', secureHeaders({
         defaultSrc: ["'self'"],
         scriptSrc: ["'self'"],
         styleSrc: ["'self'", "'unsafe-inline'"],
-        imgSrc: ["'self'", 'data:'],
+        imgSrc: ["'self'", 'data:', 'https://blog.gumyo.net'],
         connectSrc: ["'self'"],
         fontSrc: ["'self'"],
         objectSrc: ["'none'"],
@@ -52,6 +53,7 @@ app.use('*', secureHeaders({
 app.use('*', createRateLimiter(60 * 1000, 60))
 
 app.route('/api', createApiRouter({ lottoService, episodeService }))
+app.route('/og', createOgRouter({ lottoService, episodeService }))
 app.route('/', createPagesRouter({ lottoService, episodeService }))
 
 app.notFound((c) => c.json({ error: 'Not Found' }, 404))

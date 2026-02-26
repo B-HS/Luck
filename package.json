@@ -31,7 +31,9 @@
         "typescript": "^5"
     },
     "dependencies": {
+        "@fontsource/noto-sans-kr": "^5.2.9",
         "@libsql/client": "^0.17.0",
+        "@resvg/resvg-wasm": "^2.6.2",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "drizzle-orm": "^0.45.1",
@@ -40,6 +42,7 @@
         "radix-ui": "^1.4.3",
         "react": "19",
         "react-dom": "19",
+        "satori": "^0.19.2",
         "tailwind-merge": "^3.5.0"
     }
 }
