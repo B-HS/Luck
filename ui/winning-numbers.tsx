@@ -1,4 +1,4 @@
-import { LottoBall } from "./lotto-ball.tsx";
+import { LottoBall } from "./lotto-ball";
 
 export const WinningNumbers = ({
   numbers,

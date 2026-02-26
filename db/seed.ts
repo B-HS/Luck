@@ -1,5 +1,5 @@
-import { createDb } from "./index.ts";
-import { episodes } from "./schema.ts";
+import { createDb } from "./index";
+import { episodes } from "./schema";
 import { sql } from "drizzle-orm";
 
 const FIRST_DRAW_DATE = new Date("2002-12-07");

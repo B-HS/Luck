@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { formatMoney, formatDate, formatCount } from "../../lib/format.ts";
+import { formatMoney, formatDate, formatCount } from "../../lib/format";
 
 describe("formatMoney", () => {
   test("금액을 한국 형식으로 포맷", () => {

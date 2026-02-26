@@ -1,6 +1,6 @@
 import { Hono } from "hono";
-import type { LottoService } from "../services/lotto-service.ts";
-import type { EpisodeService } from "../services/episode-service.ts";
+import type { LottoService } from "../services/lotto-service";
+import type { EpisodeService } from "../services/episode-service";
 
 export const createApiRouter = (deps: {
   lottoService: LottoService;

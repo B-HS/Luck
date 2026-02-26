@@ -1,9 +1,9 @@
-import { Card, CardContent, CardHeader } from "../ui/components/card.tsx";
-import { EpisodeHeader } from "./episode-header.tsx";
-import { WinningNumbers } from "./winning-numbers.tsx";
-import { PrizeTable } from "./prize-table.tsx";
-import { SalesInfo } from "./sales-info.tsx";
-import type { lottoResults } from "../db/schema.ts";
+import { Card, CardContent, CardHeader } from "../ui/components/card";
+import { EpisodeHeader } from "./episode-header";
+import { WinningNumbers } from "./winning-numbers";
+import { PrizeTable } from "./prize-table";
+import { SalesInfo } from "./sales-info";
+import type { lottoResults } from "../db/schema";
 
 type LottoResult = typeof lottoResults.$inferSelect;
 

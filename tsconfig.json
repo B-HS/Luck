@@ -8,7 +8,6 @@
     "jsxImportSource": "react",
     "allowJs": true,
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "noEmit": true,
     "strict": true,

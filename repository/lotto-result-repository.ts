@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
-import { lottoResults } from "../db/schema.ts";
-import type { DrizzleDb } from "../db/index.ts";
+import { lottoResults } from "../db/schema";
+import type { DrizzleDb } from "../db/index";
 
 type NewLottoResult = typeof lottoResults.$inferInsert;
 

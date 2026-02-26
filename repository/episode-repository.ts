@@ -1,6 +1,6 @@
 import { eq, desc } from "drizzle-orm";
-import { episodes } from "../db/schema.ts";
-import type { DrizzleDb } from "../db/index.ts";
+import { episodes } from "../db/schema";
+import type { DrizzleDb } from "../db/index";
 
 export const createEpisodeRepository = (db: DrizzleDb) => ({
   findById: (id: number) =>

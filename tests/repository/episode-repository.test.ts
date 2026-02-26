@@ -2,8 +2,8 @@ import { describe, expect, test, beforeEach } from "bun:test";
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
 import { sql } from "drizzle-orm";
-import * as schema from "../../db/schema.ts";
-import { createEpisodeRepository } from "../../repository/episode-repository.ts";
+import * as schema from "../../db/schema";
+import { createEpisodeRepository } from "../../repository/episode-repository";
 
 const createTestDb = async () => {
   const client = createClient({ url: "file::memory:" });

@@ -1,5 +1,5 @@
-import { Badge } from "../ui/components/badge.tsx";
-import { formatDate } from "../lib/format.ts";
+import { Badge } from "../ui/components/badge";
+import { formatDate } from "../lib/format";
 
 export const EpisodeHeader = ({
   episode,

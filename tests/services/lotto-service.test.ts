@@ -1,5 +1,5 @@
 import { describe, expect, test, mock } from "bun:test";
-import { createLottoService } from "../../services/lotto-service.ts";
+import { createLottoService } from "../../services/lotto-service";
 
 const makeMockResult = (episodeId: number) => ({
   id: 1,

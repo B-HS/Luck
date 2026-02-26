@@ -1,5 +1,5 @@
-import { getBallColor } from "../lib/ball-color.ts";
-import { cn } from "../lib/utils.ts";
+import { getBallColor } from "../lib/ball-color";
+import { cn } from "../lib/utils";
 
 export const LottoBall = ({
   number,
